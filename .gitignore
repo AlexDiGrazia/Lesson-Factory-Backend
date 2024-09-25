@@ -1,0 +1,10 @@
+.DS_Store
+private_key.pem
+public_key.pem
+private_key2.pem
+public_key2.pem
+node_modules
+.env*
+*.env
+lambda-mediaConvert/hello-world/.env
+node_modules
