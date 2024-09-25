@@ -6,5 +6,7 @@ public_key2.pem
 node_modules
 .env*
 *.env
-lambda-mediaConvert/hello-world/.env
+lambda-mediaConvert-HelloWorldFunction-tlHqyWnRiaZR/.env
+lambda-mediaConvert-HelloWorldFunction-tlHqyWnRiaZR/node_modules/
 node_modules
+*/node_modules
