@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-
 import { uploadRouter } from "./routers/upload.router";
 import { presignedUrlRouter } from "./routers/presignedUrl.router";
 import { videosRouter } from "./routers/videos.router";
