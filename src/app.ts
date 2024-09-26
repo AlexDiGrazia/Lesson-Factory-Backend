@@ -4,20 +4,10 @@ import { prisma } from "../prisma/db.setup";
 import { validateRequest } from "zod-express-middleware";
 import { z } from "zod";
 import multer from "multer";
-import {
-  S3Client,
-  CreateMultipartUploadCommand,
-  UploadPartCommand,
-  CompleteMultipartUploadCommand,
-  ListPartsCommand,
-  ListObjectsV2Command,
-} from "@aws-sdk/client-s3";
-// import AWS from "aws-sdk";
-import ffmpeg from "fluent-ffmpeg";
+import { S3Client, CreateMultipartUploadCommand } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
 import Busboy from "busboy";
-import { Readable, PassThrough, Transform } from "stream";
-import { ETag } from "aws-sdk/clients/codedeploy";
+import { Readable, Transform } from "stream";
 import { NodeHttpHandler } from "@smithy/node-http-handler";
 import https from "https";
 import { createHash } from "crypto";
@@ -86,7 +76,6 @@ app.get("/videos", async (req, res) => {
 });
 
 app.get("/firstVideo", async (req, res) => {
-  console.log("hit");
   const firstTableRow =
     await prisma.$queryRaw`SELECT * FROM "Video" LIMIT 1 OFFSET 4`;
   res.json(firstTableRow);
@@ -94,7 +83,6 @@ app.get("/firstVideo", async (req, res) => {
 
 app.get("/videos/:id", async (req, res) => {
   const id = +req.params.id;
-  console.log("this id ", id, typeof id);
   const singleVideo = await prisma.video.findUnique({
     where: {
       id,
@@ -157,7 +145,6 @@ app.post("/upload", async (req, res) => {
         buffer = Buffer.concat([buffer, chunk]);
         if (buffer.length >= aggregate) {
           const hash = createHash("md5").update(buffer).digest("base64");
-          // console.log(hash);
           const uploadPartParams = {
             Body: buffer,
             Bucket: bucketName,
@@ -167,7 +154,6 @@ app.post("/upload", async (req, res) => {
             ContentMD5: hash, //It seems like this param made the difference between Parts transferring as the correct size and not
           };
           await uploadQueue.add("video_part", uploadPartParams);
-          console.log(uploadPartParams.Body);
           buffer = Buffer.alloc(0);
           PartNumber++;
           callback();
@@ -194,8 +180,6 @@ app.post("/upload", async (req, res) => {
           UploadId,
         };
         await uploadQueue.add("last_video_part", uploadPartParams);
-
-        console.log("all done");
       },
     });
   };
@@ -209,8 +193,6 @@ app.post("/upload", async (req, res) => {
     ) => {
       const { encoding, filename, mimeType } = info;
       originalFileName = filename;
-      console.log(mimeType);
-      console.log(filename);
 
       const mpuParams = {
         Bucket: bucketName,
@@ -233,9 +215,7 @@ app.post("/upload", async (req, res) => {
         bucketName,
         filename
       );
-      file.pipe(transformStream).on("end", () => {
-        console.log(`end`);
-      });
+      file.pipe(transformStream).on("end", () => {});
 
       let PartNumber = 1;
 
@@ -260,7 +240,6 @@ app.post("/upload", async (req, res) => {
   });
 
   busboy.on("finish", async () => {
-    console.log("finished");
     // await prisma.video.create({
     //   data: {
     //     title: videoTitle,
@@ -295,21 +274,13 @@ app.delete(
 });
 
 app.post("/presigned-url", async (req, res) => {
-  console.log("presigned");
   const privateKey = process.env.PRIVATE_KEY_TWO;
-  console.log(privateKey);
-  // const privateKey = process.env.CLOUDFRONT_PRIVATE_KEY;
   const keyPairId = process.env.KEY_PAIR_ID_TWO;
-  // const keyPairId = process.env.CLOUDFRONT_KEY_PAIR_ID;
   const dateLessThan = new Date(Date.now() + 1000 * 10).toString();
 
   if (privateKey === undefined || keyPairId === undefined) {
     return res.status(400).send("Environment variable not found");
   }
-
-  console.log({ privateKey, keyPairId });
-  console.log("url: ", req.body.url);
-  console.log({ dateLessThan });
 
   const signedUrl = getSignedUrl({
     url: req.body.url,
