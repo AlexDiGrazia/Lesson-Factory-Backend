@@ -68,11 +68,6 @@ uploadRouter.post("/", async (req, res) => {
     //Above note fixed by adding Checksum to uploadPartCommand()
     let PartNumber = 1;
 
-    const Parts: {
-      ETag: string;
-      PartNumber: number;
-    }[] = [];
-
     return new Transform({
       async transform(
         chunk: Buffer,
