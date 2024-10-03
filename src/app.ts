@@ -3,6 +3,7 @@ import cors from "cors";
 import { uploadRouter } from "./routers/upload.router";
 import { presignedUrlRouter } from "./routers/presignedUrl.router";
 import { videosRouter } from "./routers/videos.router";
+import { stripeRouter } from "./routers/stripe.router";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use("/upload", uploadRouter);
 app.use("/presigned-url", presignedUrlRouter);
 app.use("/videos", videosRouter);
+app.use("/create-checkout-session", stripeRouter);
 
 const port = 3000;
 app.listen(port, () => {
