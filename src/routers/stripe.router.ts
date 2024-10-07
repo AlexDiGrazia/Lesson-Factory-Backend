@@ -4,9 +4,22 @@ const stripe = require("stripe")(
 );
 
 const stripeRouter = Router();
-const DOMAIN = "http://localhost:5713";
+const DOMAIN = "http://localhost:5173";
 
 stripeRouter.post("/", async (req, res) => {
+  const product = await stripe.products.create({
+    name: "Membership",
+    id: "new_membership",
+    default_price: "membership_price",
+  });
+
+  const price = await stripe.prices.create({
+    product: "{{PRODUCT_ID}}",
+    unit_amount: 2000,
+    currency: "usd",
+    id: "membership_price",
+  });
+
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",
     line_items: [
@@ -19,6 +32,7 @@ stripeRouter.post("/", async (req, res) => {
     return_url: `${DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
     automatic_tax: { enabled: true },
   });
+  res.send({ clientSecret: session.client_secret });
 });
 
 export { stripeRouter };
