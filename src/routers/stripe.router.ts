@@ -28,7 +28,7 @@ stripeRouter.post("/", async (req, res) => {
         quantity: 1,
       },
     ],
-    mode: "payment",
+    mode: "subscription",
     return_url: `${DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
     automatic_tax: { enabled: true },
   });
