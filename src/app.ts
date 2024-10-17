@@ -4,6 +4,8 @@ import { uploadRouter } from "./routers/upload.router";
 import { presignedUrlRouter } from "./routers/presignedUrl.router";
 import { videosRouter } from "./routers/videos.router";
 import { stripeRouter } from "./routers/stripe.router";
+import { authRouter } from "./routers/auth.router";
+import { emailVerificationRouter } from "./routers/emailVerification.router";
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use("/upload", uploadRouter);
 app.use("/presigned-url", presignedUrlRouter);
 app.use("/videos", videosRouter);
 app.use("/create-checkout-session", stripeRouter);
+app.use("/auth", authRouter);
+app.use("/confirmation", emailVerificationRouter);
 
 const port = 3000;
 app.listen(port, () => {
