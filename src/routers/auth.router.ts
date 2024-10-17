@@ -10,13 +10,13 @@ const authRouter = Router();
 
 authRouter.post(
   "/signup",
-  // validateRequest({
-  //   body: z.object({
-  //     email: z.string(),
-  //     password: z.string(),
-  //     role: z.enum(["USER", "ADMIN"]),
-  //   }),
-  // }),
+  validateRequest({
+    body: z.object({
+      email: z.string(),
+      password: z.string(),
+      role: z.enum(["USER", "ADMIN"]),
+    }),
+  }),
   async (req, res) => {
     const email = req.body.email;
     const password = await encryptPassword(req.body.password);
