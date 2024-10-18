@@ -35,6 +35,7 @@ export const sendVerificationEmail = (user: TUser) => {
         return new Error("missing email from .env");
       }
       console.log(user.email, { email: process.env.EMAIL_ADDRESS });
+
       transporter.sendMail(
         {
           from: "The Lesson Factory",
