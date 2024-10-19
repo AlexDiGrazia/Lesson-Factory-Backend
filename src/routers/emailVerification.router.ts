@@ -2,6 +2,8 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { prisma } from "../../prisma/db.setup";
+import { sendVerificationEmail } from "../emailVerification";
+import { limiter } from "../rateLimiter";
 
 dotenv.config();
 
@@ -30,6 +32,17 @@ emailVerificationRouter.get("/:token", async (req, res) => {
     return res.redirect("http://localhost:5173/login");
   } else {
     return res.status(400).send({ error: "Invalid token" });
+  }
+});
+
+emailVerificationRouter.post("/resend_email", limiter, async (req, res) => {
+  const id = Number(req.body.id);
+  const email = req.body.email;
+  try {
+    sendVerificationEmail(email, id);
+    res.status(200).send({ success: "New email sent" });
+  } catch (error) {
+    res.status(500).send({ error, message: "Email failed to send" });
   }
 });
 
