@@ -30,7 +30,9 @@ authRouter.post(
       },
     });
 
-    sendVerificationEmail(newUser);
+    const id = newUser.id;
+
+    sendVerificationEmail(email, id);
 
     return res.status(200).send(newUser);
   }
