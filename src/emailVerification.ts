@@ -19,12 +19,12 @@ export const idFromUserObject = (user: TUser) => ({
 
 const BASE_URL = "http://localhost:3000";
 
-export const sendVerificationEmail = (user: TUser) => {
+export const sendVerificationEmail = (email: string, id: number) => {
   if (!process.env.EMAIL_JWT_SECRET)
     return new Error("EMAIL_JWT_SECRET is missing from environment variables");
 
   jwt.sign(
-    { user: idFromUserObject(user) },
+    { user: { id } },
     process.env.EMAIL_JWT_SECRET,
     {
       expiresIn: "1d",
@@ -34,12 +34,12 @@ export const sendVerificationEmail = (user: TUser) => {
       if (!process.env.EMAIL_ADDRESS) {
         return new Error("missing email from .env");
       }
-      console.log(user.email, { email: process.env.EMAIL_ADDRESS });
+      console.log(email, { email: process.env.EMAIL_ADDRESS });
 
       transporter.sendMail(
         {
           from: "The Lesson Factory",
-          to: user.email,
+          to: email,
           subject: "Confirm your email!",
           html: `
           <p style="padding-left: 200px;">
