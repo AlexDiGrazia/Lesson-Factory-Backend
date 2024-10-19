@@ -12,6 +12,8 @@ export const encryptPassword = (password: string) =>
 export const createUnsecuredUserInformation = (user: TUser) => ({
   id: user.id,
   email: user.email,
+  role: user.role,
+  emailVerified: user.emailVerified,
 });
 
 export const createJWT = (user: TUser) => {
