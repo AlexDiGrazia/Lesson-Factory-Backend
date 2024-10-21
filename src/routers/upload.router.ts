@@ -7,6 +7,7 @@ import Bull from "bull";
 import { Readable, Transform } from "stream";
 import { createHash } from "crypto";
 import dotenv from "dotenv";
+import { authMiddleware } from "../authUtils";
 
 const uploadRouter = Router();
 
@@ -38,6 +39,7 @@ const s3v3 = new S3Client({
     throw new Error(`Missing environment variable ${key}`);
 });
 
+// TO DO: add authMiddleware.  Don't forget to add the accompanying token on the frontned
 uploadRouter.post("/", async (req, res) => {
   const busboy = Busboy({ headers: req.headers });
 
@@ -76,6 +78,7 @@ uploadRouter.post("/", async (req, res) => {
       ) {
         buffer = Buffer.concat([buffer, chunk]);
         if (buffer.length >= aggregate) {
+          console.log(buffer);
           const hash = createHash("md5").update(buffer).digest("base64");
           const uploadPartParams = {
             Body: buffer,
