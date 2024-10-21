@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { TUser } from "../types/authTypes";
 import dotenv from "dotenv";
+import { NextFunction, Request, Response } from "express";
 
 dotenv.config();
 const saltRounds = 11;
@@ -24,4 +25,13 @@ export const createJWT = (user: TUser) => {
     createUnsecuredUserInformation(user),
     process.env.USER_LOGIN_JWT_SECRET
   );
+};
+
+export const authMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log(req.headers.authorization?.split(""));
+  next();
 };
