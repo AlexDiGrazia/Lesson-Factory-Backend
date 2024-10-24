@@ -75,8 +75,10 @@ export const authMiddleware = async (
     },
   });
 
+  if (userFromJWT) console.log(userFromJWT);
   if (!userFromJWT) return res.status(404).json({ message: "User not found" });
 
+  console.log("auth worked");
   req.user = createUnsecuredUserInformation(userFromJWT);
   next();
 };
