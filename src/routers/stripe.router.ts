@@ -1,30 +1,35 @@
 import { Router } from "express";
-const stripe = require("stripe")(
-  "sk_test_51Q5KrD2NGxzi9IJzwKscj4NCbPxhF2nzmTp7podK6CpTa2tTgh1891fBzVVRVbfB4N9XBpsHtCK0ULj0PhtcLDU0001A4fnWPV"
-);
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const stripeRouter = Router();
 const DOMAIN = "http://localhost:5173";
 
 stripeRouter.post("/", async (req, res) => {
+  console.log("stripe ran ");
+  console.log({ secret_key: process.env.STRIPE_SECRET_KEY });
+
   const product = await stripe.products.create({
     name: "Membership",
     id: "new_membership",
-    default_price: "membership_price",
+    // default_price: "membership_price",
   });
 
   const price = await stripe.prices.create({
-    product: "{{PRODUCT_ID}}",
+    product: product.id,
     unit_amount: 2000,
     currency: "usd",
-    id: "membership_price",
+    // id: "membership_price",
   });
 
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",
     line_items: [
       {
-        price: "{{PRICE_ID}}",
+        price: price.id,
         quantity: 1,
       },
     ],
