@@ -40,7 +40,7 @@ const s3v3 = new S3Client({
 });
 
 // TO DO: add authMiddleware.  Don't forget to add the accompanying token on the frontned
-uploadRouter.post("/", async (req, res) => {
+uploadRouter.post("/", authMiddleware, async (req, res) => {
   const busboy = Busboy({ headers: req.headers });
 
   if (!REDIS_HOST || !REDIS_PORT) {
