@@ -65,6 +65,7 @@ export const authMiddleware = async (
 ) => {
   const [, token] = req.headers.authorization?.split(" ") || [];
   const jwtData = getDataFromJWT(token);
+  const functionUsed = req.headers["x_meta_function"];
 
   if (!jwtData)
     return res.status(401).json({ message: "Invalid authorization token" });
@@ -75,10 +76,14 @@ export const authMiddleware = async (
     },
   });
 
-  if (userFromJWT) console.log(userFromJWT);
+  if (userFromJWT) console.log({ userFromJWT, functionUsed });
   if (!userFromJWT) return res.status(404).json({ message: "User not found" });
 
-  console.log("auth worked");
+  console.log(`
+    
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     
+    `);
   req.user = createUnsecuredUserInformation(userFromJWT);
   next();
 };
