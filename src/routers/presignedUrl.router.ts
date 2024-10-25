@@ -1,13 +1,14 @@
 import { Router } from "express";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import dotenv from "dotenv";
+import { authMiddleware } from "../authUtils";
 
 dotenv.config();
 const { PRIVATE_KEY_TWO: privateKey, KEY_PAIR_ID_TWO: keyPairId } = process.env;
 
 const presignedUrlRouter = Router();
 
-presignedUrlRouter.post("/", async (req, res) => {
+presignedUrlRouter.post("/", authMiddleware, async (req, res) => {
   const dateLessThan = new Date(Date.now() + 1000 * 60).toString();
 
   if (privateKey === undefined || keyPairId === undefined) {
