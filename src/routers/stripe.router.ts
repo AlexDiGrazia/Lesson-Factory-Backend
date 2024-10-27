@@ -21,7 +21,8 @@ stripeRouter.post("/", async (req, res) => {
     // mode: "subscription",
     mode: "payment",
     allow_promotion_codes: true,
-    return_url: `${DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
+    // return_url: `${DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
+    return_url: `${DOMAIN}/signup/payment/confirmation`,
     automatic_tax: { enabled: true },
   });
   res.send({ clientSecret: session.client_secret });
