@@ -29,7 +29,7 @@ emailVerificationRouter.get("/:token", async (req, res) => {
         emailVerified: true,
       },
     });
-    return res.redirect("http://localhost:5173/login");
+    return res.redirect("http://localhost:5173/signup/payment");
   } else {
     return res.status(400).send({ error: "Invalid token" });
   }
