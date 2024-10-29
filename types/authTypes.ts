@@ -4,4 +4,5 @@ export type TUser = {
   password: string;
   role: string;
   emailVerified: boolean;
+  subscribed: boolean;
 };
