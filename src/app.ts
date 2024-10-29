@@ -6,6 +6,7 @@ import { videosRouter } from "./routers/videos.router";
 import { stripeRouter } from "./routers/stripe.router";
 import { authRouter } from "./routers/auth.router";
 import { emailVerificationRouter } from "./routers/emailVerification.router";
+import { subscriptionRouter } from "./routers/subscription.router";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use("/upload", uploadRouter);
 app.use("/presigned-url", presignedUrlRouter);
 app.use("/videos", videosRouter);
 app.use("/create-checkout-session", stripeRouter);
+app.use("/subscription", subscriptionRouter);
 app.use("/auth", authRouter);
 app.use("/confirmation", emailVerificationRouter);
 
