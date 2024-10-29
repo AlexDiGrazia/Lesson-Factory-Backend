@@ -5,6 +5,8 @@ import { validateRequest } from "zod-express-middleware";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { sendVerificationEmail } from "../emailVerification";
+import { limiter } from "../rateLimiter";
+import jwt from "jsonwebtoken";
 
 const authRouter = Router();
 
@@ -46,6 +48,7 @@ authRouter.post(
       password: z.string(),
     }),
   }),
+  limiter,
   async (req, res) => {
     const email = req.body.email;
     const requestBodyPassword = req.body.password;
