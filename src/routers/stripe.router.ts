@@ -13,8 +13,9 @@ stripeRouter.post("/", async (req, res) => {
     ui_mode: "embedded",
     line_items: [
       {
-        // price: "price_1QDhp72NGxzi9IJzeoDYcTfy",
-        price: "price_1QDhnm2NGxzi9IJz4A1CC2zw",
+        // price: "price_1QDhp72NGxzi9IJzeoDYcTfy",  $20 recurring monthly
+        // price: "price_1QDhnm2NGxzi9IJz4A1CC2zw",  $20 one-off
+        price: "price_1QF2sz2NGxzi9IJzd5s4JSBk",
         quantity: 1,
       },
     ],
