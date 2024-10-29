@@ -20,6 +20,7 @@ model User {
   password String
   role Role @default(USER)
   emailVerified Boolean @default(false)
+  subscribed Boolean @default(false)
 }
 
 enum Role {
