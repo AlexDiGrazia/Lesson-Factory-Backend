@@ -1,12 +1,13 @@
 import Router from "express";
 import { prisma } from "../../prisma/db.setup";
+import { createJWT } from "../authUtils";
 
 export const subscriptionRouter = Router();
 
 subscriptionRouter.post("/", async (req, res) => {
   console.log("subscription updated");
   const id = Number(req.body.id);
-  const newSubscriptionStatus = await prisma.user.update({
+  const updatedUser = await prisma.user.update({
     where: {
       id,
     },
@@ -14,5 +15,8 @@ subscriptionRouter.post("/", async (req, res) => {
       subscribed: true,
     },
   });
-  return res.status(200).send(newSubscriptionStatus);
+
+  const JWT = createJWT(updatedUser);
+
+  return res.status(200).send({ JWT });
 });
