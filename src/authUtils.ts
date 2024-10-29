@@ -25,6 +25,7 @@ export const createUnsecuredUserInformation = (user: TUser) => ({
   email: user.email,
   role: user.role,
   emailVerified: user.emailVerified,
+  subscribed: user.subscribed,
 });
 
 export const createJWT = (user: TUser) => {
