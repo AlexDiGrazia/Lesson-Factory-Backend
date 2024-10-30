@@ -12,6 +12,7 @@ model Video {
   id Int @id @default(autoincrement())
   filename String @unique
   title String
+  videoPurchase VideoPurchase[]
 }
 
 model User {
@@ -21,6 +22,17 @@ model User {
   role Role @default(USER)
   emailVerified Boolean @default(false)
   subscribed Boolean @default(false)
+  videoPurchase VideoPurchase[]
+}
+
+model VideoPurchase {
+id Int @id @default(autoincrement())
+user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+userId Int
+video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+videoId Int
+
+@@unique([userId, videoId])
 }
 
 enum Role {
