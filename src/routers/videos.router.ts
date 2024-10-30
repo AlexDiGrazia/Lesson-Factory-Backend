@@ -15,4 +15,21 @@ videosRouter.get("/firstVideo", authMiddleware, async (req, res) => {
   res.json(firstTableRow);
 });
 
+videosRouter.post("/purchased", async (req, res) => {
+  const email = req.body.email;
+  const purchasedVideos = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+    include: {
+      videoPurchase: {
+        include: {
+          video: true,
+        },
+      },
+    },
+  });
+  return res.status(200).send(purchasedVideos);
+});
+
 export { videosRouter };
