@@ -56,6 +56,9 @@ authRouter.post(
       where: {
         email,
       },
+      include: {
+        videoPurchase: true,
+      },
     });
 
     if (!user) {
