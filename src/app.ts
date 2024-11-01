@@ -17,7 +17,7 @@ app.use("/upload", uploadRouter);
 app.use("/presigned-url", presignedUrlRouter);
 app.use("/videos", videosRouter);
 app.use("/create-checkout-session", stripeRouter);
-app.use("/subscription", subscriptionRouter);
+app.use("/buy", subscriptionRouter);
 app.use("/auth", authRouter);
 app.use("/confirmation", emailVerificationRouter);
 
