@@ -26,6 +26,7 @@ export const createUnsecuredUserInformation = (user: TUser) => ({
   role: user.role,
   emailVerified: user.emailVerified,
   subscribed: user.subscribed,
+  videosOwnedByUser: user.videoPurchase.map((purchase) => purchase.videoId),
 });
 
 export const createJWT = (user: TUser) => {
@@ -74,6 +75,9 @@ export const authMiddleware = async (
   const userFromJWT = await prisma.user.findUnique({
     where: {
       email: jwtData.email,
+    },
+    include: {
+      videoPurchase: true,
     },
   });
 
