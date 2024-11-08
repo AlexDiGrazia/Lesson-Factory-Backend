@@ -15,6 +15,16 @@ videosRouter.get("/firstVideo", authMiddleware, async (req, res) => {
   res.json(firstTableRow);
 });
 
+videosRouter.post("/videoById", authMiddleware, async (req, res) => {
+  const id = +req.body.videoId;
+  const videoById = await prisma.video.findUnique({
+    where: {
+      id,
+    },
+  });
+  return res.status(200).send(videoById);
+});
+
 videosRouter.post("/owned_by_user", authMiddleware, async (req, res) => {
   console.log("owned by user");
   const videosOwnedByUser = await prisma.video.findMany({
