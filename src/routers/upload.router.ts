@@ -152,7 +152,7 @@ uploadRouter.post("/", authMiddleware, async (req, res) => {
   );
 
   busboy.on("field", (name: string, value: string) => {
-    if (name === "caption") {
+    if (name === "title") {
       videoTitle = value;
       uploadQueue.add("title", { title: videoTitle });
     }
