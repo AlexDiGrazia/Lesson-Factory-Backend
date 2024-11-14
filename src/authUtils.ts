@@ -27,6 +27,7 @@ export const createUnsecuredUserInformation = (user: TUser) => ({
   emailVerified: user.emailVerified,
   subscribed: user.subscribed,
   videosOwnedByUser: user.videoPurchase.map((purchase) => purchase.videoId),
+  stripeCustomerId: user.stripeCustomerId || null,
 });
 
 export const createJWT = (user: TUser) => {

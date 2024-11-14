@@ -7,6 +7,8 @@ import { stripeRouter } from "./routers/stripe.router";
 import { authRouter } from "./routers/auth.router";
 import { emailVerificationRouter } from "./routers/emailVerification.router";
 import { subscriptionRouter } from "./routers/subscription.router";
+import { stripeCustomerPortalRouter } from "./routers/stripeCustomerPortal.router";
+import { webhooksRouter } from "./routers/webhooks.router";
 
 const app = express();
 
@@ -17,7 +19,8 @@ app.use("/upload", uploadRouter);
 app.use("/presigned-url", presignedUrlRouter);
 app.use("/videos", videosRouter);
 app.use("/create-checkout-session", stripeRouter);
-app.use("/stripe-customer-portal", stripeRouter);
+app.use("/create_customer_portal_session", stripeCustomerPortalRouter);
+app.use("/webhooks", webhooksRouter);
 app.use("/buy", subscriptionRouter);
 app.use("/auth", authRouter);
 app.use("/confirmation", emailVerificationRouter);

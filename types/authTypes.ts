@@ -11,5 +11,6 @@ export type TUser = {
   role: string;
   emailVerified: boolean;
   subscribed: boolean;
+  stripeCustomerId: string | null;
   videoPurchase: VideoPurchase[];
 };
