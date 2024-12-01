@@ -31,5 +31,6 @@ app.use("/confirmation", emailVerificationRouter);
 
 const port = 3000;
 app.listen(port, () => {
+  console.log("github actions test");
   console.log(`server is live on port ${port}`);
 });
