@@ -15,6 +15,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", async (req, res) => {
+  res.status(200).send("Good job guys!!");
+});
+
 app.use("/upload", uploadRouter);
 app.use("/presigned-url", presignedUrlRouter);
 app.use("/videos", videosRouter);
