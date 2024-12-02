@@ -48,6 +48,8 @@ jobs:
       - name: Login to AWS ECR
         id: login-aws-ecr
         uses: aws-actions/amazon-ecr-login@v2
+      - name: echo DB URL
+        run: echo ${{ secrets.DATABASE_URL}}
       - name: Pull and Run Docker Image From ECR
         run: |
           command_id=$(aws ssm send-command \
@@ -55,7 +57,6 @@ jobs:
           --targets "Key=instanceids,Values=${{ secrets.INSTANCE_ID_1 }},${{ secrets.INSTANCE_ID_2 }}" \
           --comment "Pull Docker image and run it" \
           --parameters commands='[
-            "echo ${{ secrets.DATABASE_URL}}",
             "aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin ${{ steps.login-aws-ecr.outputs.registry }}",
             "docker stop ${{ vars.API_CONTAINER_NAME }} || true",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
