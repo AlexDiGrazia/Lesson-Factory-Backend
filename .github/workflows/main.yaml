@@ -49,7 +49,12 @@ jobs:
         id: login-aws-ecr
         uses: aws-actions/amazon-ecr-login@v2
       - name: echo DB URL
-        run: echo ${{ secrets.DATABASE_URL}}
+        run: |
+          if [ -z "${{ secrets.DATABASE_URL  }}" ]; then
+            echo "DATABASE_URL is not set!"
+          else 
+            echo "DATABASE_URL is set!"
+          fi
       - name: Pull and Run Docker Image From ECR
         run: |
           command_id=$(aws ssm send-command \
