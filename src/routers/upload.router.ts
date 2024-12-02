@@ -17,8 +17,8 @@ const {
   REDIS_PORT,
   BUCKET_NAME: bucketName,
   BUCKET_REGION: bucketRegion,
-  ACCESS_KEY: accessKey,
-  SECRET_ACCESS_KEY: secretAccessKey,
+  AWS_ACCESS_KEY_ID: accessKey,
+  AWS_SECRET_ACCESS_KEY: secretAccessKey,
   CLOUDFRONT_DISTRIBUTION: cloudfrontDistribution,
 } = process.env;
 
