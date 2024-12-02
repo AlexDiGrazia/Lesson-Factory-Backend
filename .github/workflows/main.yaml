@@ -26,11 +26,11 @@ jobs:
       - name: Build and Push API Image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-aws-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{secrets.API_IMAGE_REPO}}
+          ECR_REPOSITORY: ${{ secrets.API_IMAGE_REPO }}
           IMAGE_TAG: latest
         run: |
           echo ${{ steps.login-aws-ecr.outputs.registry }}
-          echo ${{secrets.API_IMAGE_REPO}}
+          echo ${{ secrets.API_IMAGE_REPO }}
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
