@@ -56,6 +56,22 @@ jobs:
             echo "DATABASE_URL is set!"
           fi
       - name: Pull and Run Docker Image From ECR
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          BUCKET_REGION: ${{ secrets.BUCKET_REGION }}
+          CLOUDFRONT_DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_JWT_SECRET: ${{ secrets.EMAIL_JWT_SECRET }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          KEY_PAIR_ID_TWO: ${{ secrets.KEY_PAIR_ID_TWO }}
+          PRIVATE_KEY_TWO: ${{ secrets.PRIVATE_KEY_TWO }}
+          REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          USER_LOGIN_JWT_SECRET: ${{ secrets.USER_LOGIN_JWT_SECRET }}
         run: |
           command_id=$(aws ssm send-command \
           --document-name "AWS-RunShellScript" \
@@ -66,7 +82,23 @@ jobs:
             "docker stop ${{ vars.API_CONTAINER_NAME }} || true",
             "docker rm ${{ vars.API_CONTAINER_NAME }} || true",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
-            
+            "docker run -p 3000:3000 \
+            -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+            -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+            -e BUCKET_NAME=$BUCKET_NAME \
+            -e BUCKET_REGION=$BUCKET_REGION \
+            -e CLOUDFRONT_DISTRIBUTION=$CLOUDFRONT_DISTRIBUTION \
+            -e DATABASE_URL=$DATABASE_URL \
+            -e EMAIL_ADDRESS=$EMAIL_ADDRESS \
+            -e EMAIL_JWT_SECRET=$EMAIL_JWT_SECRET \
+            -e EMAIL_PASSWORD=$EMAIL_PASSWORD \
+            -e KEY_PAIR_ID_TWO=$KEY_PAIR_ID_TWO \
+            -e PRIVATE_KEY_TWO=$PRIVATE_KEY_TWO \
+            -e REDIS_HOST=$REDIS_HOST \
+            -e REDIS_PORT=$REDIS_PORT \
+            -e STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY \
+            -e USER_LOGIN_JWT_SECRET=$USER_LOGIN_JWT_SECRET \
+            --name ${{ vars.API_CONTAINER_NAME }} ${{ steps.login-aws-ecr.outputs.registry }}/${{ secrets.API_IMAGE_REPO }}:latest"
           ]' --query "Command.CommandId" --output text)
 
           echo "command_id=$command_id" >> $GITHUB_ENV
