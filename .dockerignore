@@ -2,4 +2,3 @@ lambda-mediaConvert-HelloWorldFunction-tlHqyWnRiaZR
 .git*
 *Dockerfile*
 node_modules/
-.env
