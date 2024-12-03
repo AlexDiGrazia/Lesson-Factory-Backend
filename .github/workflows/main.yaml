@@ -31,7 +31,7 @@ jobs:
         run: |
           echo ${{ steps.login-aws-ecr.outputs.registry }}
           echo ${{ secrets.API_IMAGE_REPO }}
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
   deploy-api:
