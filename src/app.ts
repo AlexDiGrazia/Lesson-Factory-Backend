@@ -12,6 +12,10 @@ import { webhooksRouter } from "./routers/webhooks.router";
 
 const app = express();
 
+app.set("trust proxy", 1 /* number of proxies between user and server */);
+
+app.get("/ip", (request, response) => response.send(request.ip));
+
 app.use(cors());
 app.use(express.json());
 
