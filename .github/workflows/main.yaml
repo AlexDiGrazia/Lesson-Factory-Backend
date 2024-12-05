@@ -66,7 +66,7 @@ jobs:
             "docker stop ${{ vars.API_CONTAINER_NAME }} || true",
             "docker rm ${{ vars.API_CONTAINER_NAME }} || true",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
-            "docker run -p 3000:3000 
+            "docker run -p 3000:3000 --name ${{ vars.API_CONTAINER_NAME }} ${{ steps.login-aws-ecr.outputs.registry }}/${{ secrets.API_IMAGE_REPO }}:latest"
           ]' --query "Command.CommandId" --output text)
 
           echo "$command_id"
