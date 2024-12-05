@@ -56,11 +56,18 @@ jobs:
             echo "DATABASE_URL is set!"
           fi
       - name: echo variables
+        env:
+          PRIVATE_KEY_TWO: |
+            ${{ secrets.PRIVATE_KEY_TWO }}
         run: |
-          secret_key="${{ secrets.secrets.PRIVATE_KEY_TWO }}"
+          secret_key="${{ env.PRIVATE_KEY_TWO }}"
           length=${#secret_key}
           echo "Length of AWS_ACCESS_KEY_ID is $length"
       - name: Pull and Run Docker Image From ECR
+        env:
+          PRIVATE_KEY_TWO: |
+            ${{ secrets.PRIVATE_KEY_TWO }}
+
         run: |
           command_id=$(aws ssm send-command \
           --document-name "AWS-RunShellScript" \
@@ -82,7 +89,6 @@ jobs:
             -e EMAIL_JWT_SECRET=${{ secrets.EMAIL_JWT_SECRET }} \
             -e EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} \
             -e KEY_PAIR_ID_TWO=${{ secrets.KEY_PAIR_ID_TWO }} \
-            -e PRIVATE_KEY_TWO=${{ secrets.PRIVATE_KEY_TWO }} \
             -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
             -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
             -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
