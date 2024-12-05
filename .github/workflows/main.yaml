@@ -85,10 +85,10 @@ jobs:
           --instance-id ${{ secrets.INSTANCE_ID_2 }} || true
       - name: Check Command Status
         run: |
-          commandOutput=$(aws ssm list-commands --command-id ${{ env.command_id }} --output text) 
+          commandOutput=$(aws ssm list-commands --command-id ${{ env.command_id }} --output json) 
 
           echo $commandOutput
-          status=$(aws ssm list-commands --command-id ${{ env.command_id }} --query "Commands[0].StatusDetails" --output json)
+          status=$(aws ssm list-commands --command-id ${{ env.command_id }} --query "Commands[0].StatusDetails" --output text)
 
           echo $status
 
