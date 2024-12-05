@@ -70,6 +70,7 @@ jobs:
           ]' --query "Command.CommandId" --output text)
 
           echo "$command_id"
+          echo "command_id=$command_id" >> $GITHUB_ENV
       - name: Wait for Docker Commands to Complete on Instance 1
         run: |
           echo ${{ env.command_id }}
