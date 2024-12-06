@@ -57,7 +57,7 @@ jobs:
           fi
       - name: echo variables
         env:
-          PRIVATE_KEY_TWO: ${{ secrets.USER_LOGIN_JWT_SECRET }}
+          PRIVATE_KEY_TWO: ${{ vars.API_CONTAINER_NAME }}
         run: |
           secret_key="${{env.PRIVATE_KEY_TWO}}"
           length=${#secret_key}
