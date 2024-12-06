@@ -83,7 +83,6 @@ jobs:
             -e BUCKET_NAME=${{ secrets.BUCKET_NAME }} \
             -e BUCKET_REGION=${{ secrets.BUCKET_REGION }} \
             -e CLOUDFRONT_DISTRIBUTION=${{ secrets.CLOUDFRONT_DISTRIBUTION }} \
-            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             -e EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }} \
             -e EMAIL_JWT_SECRET=${{ secrets.EMAIL_JWT_SECRET }} \
             -e EMAIL_PASSWORD=`${{ secrets.EMAIL_PASSWORD }}` \
