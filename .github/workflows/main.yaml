@@ -58,9 +58,9 @@ jobs:
       - name: echo variables
         env:
           PRIVATE_KEY_TWO: |
-            ${{ secrets.AWS_ACCESS_KEY_ID }}
+            ${{secrets.AWS_ACCESS_KEY_ID}}
         run: |
-          secret_key="${{ env.PRIVATE_KEY_TWO }}"
+          secret_key="${{env.PRIVATE_KEY_TWO}}"
           length=${#secret_key}
           echo "Length of AWS_ACCESS_KEY_ID is $length"
       - name: Pull and Run Docker Image From ECR
