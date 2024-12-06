@@ -57,7 +57,7 @@ jobs:
           fi
       - name: echo variables
         env:
-          PRIVATE_KEY_TWO: ${{ secrets.CLOUDFRONT_DISTRIBUTION }}
+          PRIVATE_KEY_TWO: ${{ secrets.DATABASE_URL }}
         run: |
           secret_key="${{env.PRIVATE_KEY_TWO}}"
           length=${#secret_key}
