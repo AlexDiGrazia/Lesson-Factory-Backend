@@ -57,7 +57,7 @@ jobs:
           fi
       - name: echo variables
         env:
-          PRIVATE_KEY_TWO: ${{ secrets.REDIS_HOST }}
+          PRIVATE_KEY_TWO: ${{ secrets.REDIS_PORT }}
         run: |
           secret_key="${{env.PRIVATE_KEY_TWO}}"
           length=${#secret_key}
