@@ -33,6 +33,19 @@ jobs:
           echo ${{ secrets.API_IMAGE_REPO }}
           docker build \
           --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
+          --build-arg AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}} \
+          --build-arg AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+          --build-arg BUCKET_NAME=${{ secrets.BUCKET_NAME }} \
+          --build-arg BUCKET_REGION=${{ secrets.BUCKET_REGION }} \
+          --build-arg CLOUDFRONT_DISTRIBUTION=${{ secrets.CLOUDFRONT_DISTRIBUTION }} \
+          --build-arg EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }} \
+          --build-arg EMAIL_JWT_SECRET=${{ secrets.EMAIL_JWT_SECRET }} \
+          --build-arg EMAIL_PASSWORD='${{ secrets.EMAIL_PASSWORD }}' \
+          --build-arg KEY_PAIR_ID_TWO=${{ secrets.KEY_PAIR_ID_TWO }} \
+          --build-arg REDIS_HOST=${{ secrets.REDIS_HOST }} \
+          --build-arg REDIS_PORT=${{ secrets.REDIS_PORT }} \
+          --build-arg STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
+          --build-arg USER_LOGIN_JWT_SECRET=${{ secrets.USER_LOGIN_JWT_SECRET }} \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
@@ -79,23 +92,7 @@ jobs:
             "docker stop ${{ vars.API_CONTAINER_NAME }} || true",
             "docker rm ${{ vars.API_CONTAINER_NAME }} || true",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
-            "docker run -p 3000:3000 \
-            -e AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}} \
-            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            -e BUCKET_NAME=${{ secrets.BUCKET_NAME }} \
-            -e BUCKET_REGION=${{ secrets.BUCKET_REGION }} \
-            -e CLOUDFRONT_DISTRIBUTION=${{ secrets.CLOUDFRONT_DISTRIBUTION }} \
-            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-            -e EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }} \
-            -e EMAIL_JWT_SECRET=${{ secrets.EMAIL_JWT_SECRET }} \
-            -e EMAIL_PASSWORD='${{ secrets.EMAIL_PASSWORD }}' \
-            -e KEY_PAIR_ID_TWO=${{ secrets.KEY_PAIR_ID_TWO }} \
-            -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
-            -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
-            -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
-            -e USER_LOGIN_JWT_SECRET=${{ secrets.USER_LOGIN_JWT_SECRET }} \
-            --name ${{ vars.API_CONTAINER_NAME }} \
-            ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO }}:latest"
+            "docker run -p 3000:3000 --name ${{ vars.API_CONTAINER_NAME }} ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO }}:latest"
           ]' --query "Command.CommandId" --output text)
 
           echo "$command_id"
