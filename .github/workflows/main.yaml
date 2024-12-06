@@ -57,7 +57,7 @@ jobs:
           fi
       - name: echo variables
         env:
-          PRIVATE_KEY_TWO: ${{ secrets.BUCKET_NAME }}
+          PRIVATE_KEY_TWO: ${{ secrets.BUCKET_REGION }}
         run: |
           secret_key="${{env.PRIVATE_KEY_TWO}}"
           length=${#secret_key}
