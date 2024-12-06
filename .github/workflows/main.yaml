@@ -72,17 +72,13 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_JWT_SECRET: ${{ secrets.EMAIL_JWT_SECRET }}
-          EMAIL_PASSWORD: ${{ secrets.EP1 }} ${{ secrets.EP2 }} ${{ secrets.EP3 }} ${{ secrets.EP4 }}
+          EMAIL_PASSWORD_BASE64: ${{ secrets.EMAIL_PASSWORD_BASE64 }}
           KEY_PAIR_ID_TWO: ${{ secrets.KEY_PAIR_ID_TWO }}
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           USER_LOGIN_JWT_SECRET: ${{ secrets.USER_LOGIN_JWT_SECRET }}
           API_CONTAINER_NAME: ${{ vars.API_CONTAINER_NAME }}
-          EP1: ${{ secrets.EP1 }}
-          EP2: ${{ secrets.EP2 }}
-          EP3: ${{ secrets.EP3 }}
-          EP4: ${{ secrets.EP4 }}
         run: |
           command_id=$(aws ssm send-command \
           --document-name "AWS-RunShellScript" \
@@ -102,7 +98,7 @@ jobs:
             -e DATABASE_URL='$DATABASE_URL' \
             -e EMAIL_ADDRESS='$EMAIL_ADDRESS' \
             -e EMAIL_JWT_SECRET='$EMAIL_JWT_SECRET' \
-            -e EMAIL_PASSWORD='word with spaces' \
+            -e EMAIL_PASSWORD_BASE64='$EMAIL_PASSWORD_BASE64' \
             -e KEY_PAIR_ID_TWO='$KEY_PAIR_ID_TWO' \
             -e REDIS_HOST='$REDIS_HOST' \
             -e REDIS_PORT='$REDIS_PORT' \
