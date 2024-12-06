@@ -58,7 +58,7 @@ jobs:
       - name: echo variables
         env:
           PRIVATE_KEY_TWO: |
-            ${{ secrets.PRIVATE_KEY_TWO }}
+            ${{ secrets.AWS_ACCESS_KEY_ID }}
         run: |
           secret_key="${{ env.PRIVATE_KEY_TWO }}"
           length=${#secret_key}
