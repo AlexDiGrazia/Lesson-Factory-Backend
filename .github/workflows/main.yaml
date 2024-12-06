@@ -98,7 +98,6 @@ jobs:
             -e DATABASE_URL='$DATABASE_URL' \
             -e EMAIL_ADDRESS='$EMAIL_ADDRESS' \
             -e EMAIL_JWT_SECRET='$EMAIL_JWT_SECRET' \
-            -e 'EMAIL_PASSWORD=$EMAIL_PASSWORD' \
             -e KEY_PAIR_ID_TWO='$KEY_PAIR_ID_TWO' \
             -e REDIS_HOST='$REDIS_HOST' \
             -e REDIS_PORT='$REDIS_PORT' \
