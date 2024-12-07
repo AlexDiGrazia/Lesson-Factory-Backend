@@ -72,7 +72,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_JWT_SECRET: ${{ secrets.EMAIL_JWT_SECRET }}
-          EMAIL_PASSWORD: ${{ vars.EMAIL_PASSWORD }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           KEY_PAIR_ID_TWO: ${{ secrets.KEY_PAIR_ID_TWO }}
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
@@ -80,6 +80,7 @@ jobs:
           USER_LOGIN_JWT_SECRET: ${{ secrets.USER_LOGIN_JWT_SECRET }}
           API_CONTAINER_NAME: ${{ vars.API_CONTAINER_NAME }}
         run: |
+          echo ${{ vars.API_CONTAINER_NAME }}
           command_id=$(aws ssm send-command \
           --document-name "AWS-RunShellScript" \
           --targets "Key=instanceIds,Values=${{ secrets.INSTANCE_ID_1 }},${{ secrets.INSTANCE_ID_2 }}" \
@@ -87,10 +88,10 @@ jobs:
           --parameters commands='[
             "aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin ${{ steps.login-aws-ecr.outputs.registry }}",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
-            "docker run -p 3000:3000 -e REDIS_HOST=${{ secrets.REDIS_HOST }} -e REDIS_PORT=${{ secrets.REDIS_PORT }} -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} -e EMAIL_JWT_SECRET=${{ secrets.EMAIL_JWT_SECRET }} -e EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }} -e EMAIL_PASSWORD='${{ vars.EMAIL_PASSWORD }}' -e USER_LOGIN_JWT_SECRET=${{ secrets.USER_LOGIN_JWT_SECRET }} -e NODE_ENV=production ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest"
+            "docker run -p 3000:3000 -e REDIS_HOST=${{ secrets.REDIS_HOST }} -e REDIS_PORT=${{ secrets.REDIS_PORT }} -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} -e EMAIL_JWT_SECRET=${{ secrets.EMAIL_JWT_SECRET }} -e EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }} -e EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} -e USER_LOGIN_JWT_SECRET=${{ secrets.USER_LOGIN_JWT_SECRET }} -e NODE_ENV=production ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest"
           ]' --query "Command.CommandId" --output text)
 
-          echo email password is ${{ vars.EMAIL_PASSWORD }}
+
           echo "$command_id"
           echo "command_id=$command_id" >> $GITHUB_ENV
       - name: Wait for Docker Commands to Complete on Instance 1
