@@ -96,7 +96,7 @@ jobs:
             -e BUCKET_REGION='$BUCKET_REGION' \
             -e CLOUDFRONT_DISTRIBUTION='$CLOUDFRONT_DISTRIBUTION' \
             -e DATABASE_URL='$DATABASE_URL' \
-            -e EMAIL_ADDRESS='$EMAIL_ADDRESS' \
+            -e 'EMAIL_ADDRESS=$EMAIL_ADDRESS' \
             -e EMAIL_JWT_SECRET='$EMAIL_JWT_SECRET' \
             -e EMAIL_PASSWORD='$EMAIL_PASSWORD' \
             -e KEY_PAIR_ID_TWO='$KEY_PAIR_ID_TWO' \
