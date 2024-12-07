@@ -81,6 +81,7 @@ jobs:
           API_CONTAINER_NAME: ${{ vars.API_CONTAINER_NAME }}
         run: |
           echo ${{ vars.API_CONTAINER_NAME }}
+          echo ${{ vars.EMAIL_PASSWORD }}
           command_id=$(aws ssm send-command \
           --document-name "AWS-RunShellScript" \
           --targets "Key=instanceIds,Values=${{ secrets.INSTANCE_ID_1 }},${{ secrets.INSTANCE_ID_2 }}" \
