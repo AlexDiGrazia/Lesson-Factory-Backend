@@ -72,7 +72,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_JWT_SECRET: ${{ secrets.EMAIL_JWT_SECRET }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_PASSWORD: "${{ secrets.EMAIL_PASSWORD }}"
           KEY_PAIR_ID_TWO: ${{ secrets.KEY_PAIR_ID_TWO }}
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
