@@ -72,7 +72,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_JWT_SECRET: ${{ secrets.EMAIL_JWT_SECRET }}
-          EMAIL_PASSWORD_BASE64: ${{ secrets.EMAIL_PASSWORD_BASE64 }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           KEY_PAIR_ID_TWO: ${{ secrets.KEY_PAIR_ID_TWO }}
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
@@ -89,7 +89,7 @@ jobs:
             "docker stop '$vars.API_CONTAINER_NAME' || true",
             "docker rm '$vars.API_CONTAINER_NAME' || true",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
-            "docker run -p 3000:3000 \
+            "docker run -p 3000:3000 \ 
             -e AWS_ACCESS_KEY_ID='$AWS_ACCESS_KEY_ID' \
             -e AWS_SECRET_ACCESS_KEY='$AWS_SECRET_ACCESS_KEY' \
             -e BUCKET_NAME='$BUCKET_NAME' \
@@ -98,7 +98,7 @@ jobs:
             -e DATABASE_URL='$DATABASE_URL' \
             -e EMAIL_ADDRESS='$EMAIL_ADDRESS' \
             -e EMAIL_JWT_SECRET='$EMAIL_JWT_SECRET' \
-            -e EMAIL_PASSWORD_BASE64='$EMAIL_PASSWORD_BASE64' \
+            -e EMAIL_PASSWORD='$EMAIL_PASSWORD' \
             -e KEY_PAIR_ID_TWO='$KEY_PAIR_ID_TWO' \
             -e REDIS_HOST='$REDIS_HOST' \
             -e REDIS_PORT='$REDIS_PORT' \
