@@ -86,25 +86,25 @@ jobs:
           --comment "Pull Docker image and run it" \
           --parameters commands='[
             "aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin ${{ steps.login-aws-ecr.outputs.registry }}",
-            "docker stop '$vars.API_CONTAINER_NAME' || true",
-            "docker rm '$vars.API_CONTAINER_NAME' || true",
+            "docker stop $vars.API_CONTAINER_NAME || true",
+            "docker rm $vars.API_CONTAINER_NAME || true",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
             "docker run -p 3000:3000 \ 
-            -e AWS_ACCESS_KEY_ID='$AWS_ACCESS_KEY_ID' \
-            -e AWS_SECRET_ACCESS_KEY='$AWS_SECRET_ACCESS_KEY' \
-            -e BUCKET_NAME='$BUCKET_NAME' \
-            -e BUCKET_REGION='$BUCKET_REGION' \
-            -e CLOUDFRONT_DISTRIBUTION='$CLOUDFRONT_DISTRIBUTION' \
-            -e DATABASE_URL='$DATABASE_URL' \
-            -e 'EMAIL_ADDRESS=$EMAIL_ADDRESS' \
-            -e EMAIL_JWT_SECRET='$EMAIL_JWT_SECRET' \
-            -e EMAIL_PASSWORD='$EMAIL_PASSWORD' \
-            -e KEY_PAIR_ID_TWO='$KEY_PAIR_ID_TWO' \
-            -e REDIS_HOST='$REDIS_HOST' \
-            -e REDIS_PORT='$REDIS_PORT' \
-            -e STRIPE_SECRET_KEY='$STRIPE_SECRET_KEY' \
-            -e USER_LOGIN_JWT_SECRET='$USER_LOGIN_JWT_SECRET' \
-            --name '$API_CONTAINER_NAME' \
+            -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+            -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+            -e BUCKET_NAME=$BUCKET_NAME \
+            -e BUCKET_REGION=$BUCKET_REGION \
+            -e CLOUDFRONT_DISTRIBUTION=$CLOUDFRONT_DISTRIBUTION \
+            -e DATABASE_URL=$DATABASE_URL \
+            -e EMAIL_ADDRESS=$EMAIL_ADDRESS \
+            -e EMAIL_JWT_SECRET=$EMAIL_JWT_SECRET \
+            -e EMAIL_PASSWORD=$EMAIL_PASSWORD \
+            -e KEY_PAIR_ID_TWO=$KEY_PAIR_ID_TWO \
+            -e REDIS_HOST=$REDIS_HOST \
+            -e REDIS_PORT=$REDIS_PORT \
+            -e STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY \
+            -e USER_LOGIN_JWT_SECRET=$USER_LOGIN_JWT_SECRET \
+            --name $API_CONTAINER_NAME \
             ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO }}:latest"
           ]' --query "Command.CommandId" --output text)
 
