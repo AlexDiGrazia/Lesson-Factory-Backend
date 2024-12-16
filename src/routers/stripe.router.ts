@@ -1,9 +1,10 @@
 import { Router } from "express";
 import dotenv from "dotenv";
+import { stripe } from "../stripe.setup";
 
 dotenv.config();
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const stripeRouter = Router();
 const DOMAIN = "http://localhost:5173";
