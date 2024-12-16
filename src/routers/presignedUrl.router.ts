@@ -6,6 +6,10 @@ import { authMiddleware } from "../authUtils";
 dotenv.config();
 const { PRIVATE_KEY_TWO: privateKey, KEY_PAIR_ID_TWO: keyPairId } = process.env;
 
+const decodedPrivateKey = privateKey
+  ? Buffer.from(privateKey, "base64").toString("utf-8")
+  : "";
+
 const presignedUrlRouter = Router();
 
 presignedUrlRouter.post("/", authMiddleware, async (req, res) => {
@@ -18,7 +22,7 @@ presignedUrlRouter.post("/", authMiddleware, async (req, res) => {
   const signedUrl = getSignedUrl({
     url: req.body.url,
     dateLessThan,
-    privateKey,
+    privateKey: decodedPrivateKey,
     keyPairId,
   });
 
