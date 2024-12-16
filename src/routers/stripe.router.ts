@@ -4,10 +4,8 @@ import { stripe } from "../stripe.setup";
 
 dotenv.config();
 
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
 const stripeRouter = Router();
-const DOMAIN = "http://localhost:5173";
+const DOMAIN = process.env.API_URL;
 
 stripeRouter.post("/", async (req, res) => {
   const mode = req.body.mode;
@@ -18,7 +16,6 @@ stripeRouter.post("/", async (req, res) => {
       ? `${DOMAIN}/${path}`
       : `${DOMAIN}/${path}/${videoId}`;
 
-  console.log(return_url);
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",
     line_items: [
@@ -37,16 +34,3 @@ stripeRouter.post("/", async (req, res) => {
 });
 
 export { stripeRouter };
-
-// price: "price_1QDhp72NGxzi9IJzeoDYcTfy",  $20 recurring monthly
-// price: "price_1QDhnm2NGxzi9IJz4A1CC2zw",  $20 one-off
-
-// mode: "subscription",
-// mode: "payment",
-
-// return_url: `${DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
-// return_url: `${
-//   req.body.return_url === "subscription"
-//     ? `${DOMAIN}/signup/payment/confirmation`
-//     : `${DOMAIN}/signup/payment/video_purchase`
-// } `,

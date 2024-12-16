@@ -17,7 +17,7 @@ export const idFromUserObject = (user: TUser) => ({
   id: user.id,
 });
 
-const BASE_URL = "https://guitarlessonfactory.com";
+const BASE_URL = process.env.API_URL;
 
 export const sendVerificationEmail = (email: string, id: number) => {
   if (!process.env.EMAIL_JWT_SECRET)
