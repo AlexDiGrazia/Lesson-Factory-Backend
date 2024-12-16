@@ -5,7 +5,7 @@ import { stripe } from "../stripe.setup";
 dotenv.config();
 
 const stripeRouter = Router();
-const DOMAIN = process.env.API_URL;
+const DOMAIN = "https://thelessonfactory.com";
 
 stripeRouter.post("/", async (req, res) => {
   const mode = req.body.mode;
