@@ -7,9 +7,10 @@ webhooksRouter.post("/", json({ type: "application/json" }), (req, res) => {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    const customerId = session.customer;
+    const customerId = session.id;
 
     console.log(session);
+    console.log({ customerId });
   }
   if (event.type === "customer.created") {
     console.log(event.data.object);

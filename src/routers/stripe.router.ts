@@ -29,7 +29,7 @@ stripeRouter.post("/", async (req, res) => {
     return_url,
     automatic_tax: { enabled: true },
   });
-  console.log(res);
+
   res.send({ clientSecret: session.client_secret });
 });
 
