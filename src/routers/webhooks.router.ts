@@ -13,10 +13,12 @@ webhooksRouter.post(
       const session = event.data.object;
       const customerId = session.customer;
       const customerEmail = session.customer_details.email;
+      const mode = session.mode;
 
       console.log({ session });
       console.log({ customerId });
       console.log({ customerEmail });
+      console.log({ mode });
     }
     if (event.type === "customer.created") {
       console.log({ newCustomer: event.data.object });
