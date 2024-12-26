@@ -16,6 +16,7 @@ webhooksRouter.post(
 
       console.log({ session });
       console.log({ customerId });
+      console.log({ customerEmail });
     }
     if (event.type === "customer.created") {
       console.log({ newCustomer: event.data.object });
