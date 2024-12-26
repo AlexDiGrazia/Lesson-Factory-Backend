@@ -19,6 +19,7 @@ webhooksRouter.post(
       console.log({ customerId });
       console.log({ customerEmail });
       console.log({ mode });
+      console.log("mode is a string", mode === "subscription");
     }
     if (event.type === "customer.created") {
       console.log({ newCustomer: event.data.object });
