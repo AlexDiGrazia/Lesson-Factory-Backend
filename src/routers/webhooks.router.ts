@@ -11,10 +11,11 @@ webhooksRouter.post(
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      const customerId = session.id;
+      const customerId = session.customer;
+      const customerEmail = session.customer_details.email;
 
       console.log({ session });
-      // console.log({ customerId });
+      console.log({ customerId });
     }
     if (event.type === "customer.created") {
       console.log({ newCustomer: event.data.object });
