@@ -1,7 +1,0 @@
-stripe listen --forward-to http://localhost:3000/webhooks --skip-verify
-
-stripe trigger checkout.session.completed
-
-
-
-
