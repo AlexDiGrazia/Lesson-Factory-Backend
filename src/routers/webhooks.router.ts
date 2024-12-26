@@ -12,12 +12,23 @@ webhooksRouter.post(
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       const customerId = session.customer;
-      const customerEmail = session.customer_details.email;
+      const email = session.customer_details.email;
       const mode = session.mode;
+
+      if (mode === "subscription") {
+        await prisma.user.update({
+          where: {
+            email,
+          },
+          data: {
+            stripeCustomerId: customerId,
+          },
+        });
+      }
 
       console.log({ session });
       console.log({ customerId });
-      console.log({ customerEmail });
+      console.log({ email });
       console.log({ mode });
       console.log("mode is a string", mode === "subscription");
     }
