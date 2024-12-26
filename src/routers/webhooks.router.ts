@@ -1,22 +1,27 @@
 import { Router, json } from "express";
+import { prisma } from "../../prisma/db.setup";
 
 const webhooksRouter = Router();
 
-webhooksRouter.post("/", json({ type: "application/json" }), (req, res) => {
-  const event = req.body;
+webhooksRouter.post(
+  "/",
+  json({ type: "application/json" }),
+  async (req, res) => {
+    const event = req.body;
 
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
-    const customerId = session.id;
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      const customerId = session.id;
 
-    console.log(session);
-    console.log({ customerId });
+      console.log({ session });
+      // console.log({ customerId });
+    }
+    if (event.type === "customer.created") {
+      console.log({ newCustomer: event.data.object });
+    }
+
+    res.status(200).send({ event });
   }
-  if (event.type === "customer.created") {
-    console.log(event.data.object);
-  }
-
-  res.status(200).send({ event });
-});
+);
 
 export { webhooksRouter };
