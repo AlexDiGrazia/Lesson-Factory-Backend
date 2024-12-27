@@ -36,6 +36,11 @@ webhooksRouter.post(
       console.log({ newCustomer: event.data.object });
     }
 
+    if (event.type === "customer.subscription.deleted") {
+      const deletionEvent = event.data.object;
+      console.log(deletionEvent);
+    }
+
     res.status(200).send({ event });
   }
 );

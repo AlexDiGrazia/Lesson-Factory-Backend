@@ -57,6 +57,7 @@ jobs:
           --parameters commands='[
             "aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin ${{ steps.login-aws-ecr.outputs.registry }}",
             "docker rmi $(docker images -q) -f",
+            "docker stop ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
             "docker pull ${{ steps.login-aws-ecr.outputs.registry }}/${{secrets.API_IMAGE_REPO}}:latest",
           ]' --query "Command.CommandId" --output text)
 
