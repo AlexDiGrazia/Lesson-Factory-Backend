@@ -22,7 +22,7 @@ model User {
   role Role @default(USER)
   emailVerified Boolean @default(false)
   subscribed Boolean @default(false)
-  stripeCustomerId String?
+  stripeCustomerId String? @unique
   videoPurchase VideoPurchase[]
 }
 

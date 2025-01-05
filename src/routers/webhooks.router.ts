@@ -37,8 +37,16 @@ webhooksRouter.post(
     }
 
     if (event.type === "customer.subscription.deleted") {
-      const deletionEvent = event.data.object;
-      console.log(deletionEvent);
+      const subscription = event.data.object;
+
+      await prisma.user.update({
+        where: {
+          stripeCustomerId: subscription.customer,
+        },
+        data: {
+          subscribed: false,
+        },
+      });
     }
 
     res.status(200).send({ event });
