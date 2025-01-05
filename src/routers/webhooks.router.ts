@@ -45,6 +45,7 @@ webhooksRouter.post(
         },
         data: {
           subscribed: false,
+          stripeCustomerId: null,
         },
       });
     }
