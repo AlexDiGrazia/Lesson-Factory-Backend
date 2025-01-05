@@ -10,6 +10,7 @@ const DOMAIN = "https://thelessonfactory.com";
 stripeRouter.post("/", async (req, res) => {
   const mode = req.body.mode;
   const path = req.body.return_url;
+  const customer_email = req.body.customer_email;
   const videoId = req.body.videoId;
   const return_url =
     mode === "subscription"
@@ -28,6 +29,7 @@ stripeRouter.post("/", async (req, res) => {
     allow_promotion_codes: true,
     return_url,
     automatic_tax: { enabled: true },
+    customer_email,
   });
 
   res.send({ clientSecret: session.client_secret });
