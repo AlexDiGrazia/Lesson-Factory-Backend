@@ -39,7 +39,6 @@ const s3v3 = new S3Client({
     throw new Error(`Missing environment variable ${key}`);
 });
 
-// TO DO: add authMiddleware.  Don't forget to add the accompanying token on the frontned
 uploadRouter.post("/", authMiddleware, async (req, res) => {
   const busboy = Busboy({ headers: req.headers });
 
