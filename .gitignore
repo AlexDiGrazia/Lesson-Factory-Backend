@@ -11,3 +11,5 @@ lambda-mediaConvert-HelloWorldFunction-tlHqyWnRiaZR/node_modules/
 node_modules
 */node_modules
 commands.txt
+/dist
+/dist/*
