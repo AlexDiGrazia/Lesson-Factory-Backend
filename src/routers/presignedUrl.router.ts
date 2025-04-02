@@ -19,10 +19,13 @@ presignedUrlRouter.post("/", authMiddleware, async (req, res) => {
     return res.status(400).send("Environment variable not found");
   }
 
+  console.log({ privateKey });
+
   const signedUrl = getSignedUrl({
     url: req.body.url,
     dateLessThan,
-    privateKey: decodedPrivateKey,
+    // privateKey: decodedPrivateKey,
+    privateKey,
     keyPairId,
   });
 
