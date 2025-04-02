@@ -24,8 +24,7 @@ presignedUrlRouter.post("/", authMiddleware, async (req, res) => {
   const signedUrl = getSignedUrl({
     url: req.body.url,
     dateLessThan,
-    // privateKey: decodedPrivateKey,
-    privateKey,
+    privateKey: decodedPrivateKey,
     keyPairId,
   });
 
