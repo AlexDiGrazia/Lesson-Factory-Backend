@@ -1,0 +1,10 @@
+#install git on ec2
+sudo yum update -y
+sudo yum install git -y
+git — version
+
+install node on ec2
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 16 (anything later requires glibc 2.27, but AWS ec2s only come with glibc2.26)
+node -v
